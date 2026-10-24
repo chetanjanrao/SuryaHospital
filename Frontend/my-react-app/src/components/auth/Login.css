@@ -1,0 +1,108 @@
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #eef5ff, #f8fafc);
+    font-family: Arial, sans-serif;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 36px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+.login-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    border-radius: 12px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.login-card h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+    color: #0f172a;
+}
+
+.login-subtitle {
+    margin: 10px 0 28px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.login-card label {
+    display: block;
+    margin: 16px 0 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+
+.login-card input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-card button:hover {
+    background: #1d4ed8;
+}
+
+.login-card button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.login-error {
+    margin-top: 16px;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.login-footer {
+    margin: 22px 0 0;
+    text-align: center;
+    font-size: 12px;
+    color: #94a3b8;
+}
