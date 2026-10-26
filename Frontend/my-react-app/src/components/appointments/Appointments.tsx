@@ -7,8 +7,6 @@ import {
     X,
 } from "lucide-react";
 import "./Appointments.css";
-
-//const API_URL = "http://localhost:8080/api";
 import {API_URL} from "../../config.ts";
 
 type AppointmentStatus =

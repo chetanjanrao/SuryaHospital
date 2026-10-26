@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { loginUser, getCsrfToken } from "../../services/authService";
 
-//const API_URL = "http://localhost:8080/api/auth";
+
 import {API_URL} from "../../config.ts";
 
 type LoginStep = "password" | "enrollment" | "verification";

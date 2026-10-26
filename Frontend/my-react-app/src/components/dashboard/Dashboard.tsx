@@ -23,7 +23,7 @@ import {
 
 import type { LayoutContextType } from "../../Layout";
 
-//const API_BASE_URL = "http://localhost:8080/api";
+
 import {API_URL} from "../../config";
 
 type ApiRecord = Record<string, any>;

@@ -90,7 +90,7 @@ async function ensureCsrfToken(): Promise<string | null> {
     }
 
     // Ask Spring Security to create/send the CSRF cookie before a write request.
-    const response = await fetch("http://localhost:8080/api/auth/csrf", {
+    const response = await fetch(`${API_URL}/api/auth/csrf`, {
         method: "GET",
         credentials: "include",
         headers: { Accept: "application/json" },

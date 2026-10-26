@@ -72,7 +72,6 @@ interface CreateInvoiceRequest {
 // This service logic stays inside Billing.tsx.
 // =====================================================
 
-//const API_URL = "http://localhost:8080/api/billing";
 
 // Read a cookie value by name (used for the Spring CSRF token).
 function getCookie(name: string): string | null {

@@ -14,7 +14,7 @@ type Patient = {
     registeredOn?: string;
 };
 
-//const API_URL = "http://localhost:8080/api/patients";
+
 import {API_URL} from "../../config.ts";
 
 const emptyForm = {

@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import "./Departments.css";
 
-//const API_URL = "http://localhost:8080/api/departments";
+
 import {API_URL} from "../../config.ts";
 
 type DepartmentStatus = "Active" | "Inactive";

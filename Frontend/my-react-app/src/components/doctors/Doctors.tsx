@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import "./Doctors.css";
 
-//const API_URL = "http://localhost:8080/api/doctors";
+
 import {API_URL} from "../../config.ts";
 
 type Doctor = {
