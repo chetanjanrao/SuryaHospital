@@ -13,10 +13,11 @@ import "./MedicalRecords.css";
 /* ------------------------------------------------------------------ */
 /* Medical record service (previously medicalRecordService.ts)         */
 /* ------------------------------------------------------------------ */
+import {API_URL} from "../../config.ts";
 
-const API_URL = "http://localhost:8080/api/medical-records";
-const PATIENT_API = "http://localhost:8080/api/patients";
-const DOCTOR_API = "http://localhost:8080/api/doctors";
+const API_DATA = `${API_URL}/api/medical-records`;
+const PATIENT_API = `${API_DATA}/api/patients`;
+const DOCTOR_API = `${API_DATA}/api/doctors`;
 
 // Status values expected by the Spring Boot backend
 export type ApiRecordStatus = "ACTIVE" | "FOLLOW_UP" | "CLOSED";
@@ -76,7 +77,7 @@ async function handleResponse<T>(
 
 // 1. Get all medical records
 export async function getMedicalRecords(): Promise<ApiMedicalRecord[]> {
-    const response = await fetch(API_URL, { credentials: "include" });
+    const response = await fetch(API_DATA, { credentials: "include" });
     return handleResponse<ApiMedicalRecord[]>(response);
 }
 
@@ -84,7 +85,7 @@ export async function getMedicalRecords(): Promise<ApiMedicalRecord[]> {
 export async function getMedicalRecordById(
     id: number
 ): Promise<ApiMedicalRecord> {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_DATA}/${id}`, {
         credentials: "include",
     });
     return handleResponse<ApiMedicalRecord>(response);
@@ -94,7 +95,7 @@ export async function getMedicalRecordById(
 export async function createMedicalRecord(
     record: MedicalRecordPayload
 ): Promise<ApiMedicalRecord> {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_DATA, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -112,7 +113,7 @@ export async function updateMedicalRecord(
     id: number,
     record: MedicalRecordPayload
 ): Promise<ApiMedicalRecord> {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_DATA}/${id}`, {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -129,7 +130,7 @@ export async function updateMedicalRecord(
 export async function deleteMedicalRecord(
     id: number
 ): Promise<void> {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_DATA}/${id}`, {
         method: "DELETE",
         credentials: "include",
         headers: {

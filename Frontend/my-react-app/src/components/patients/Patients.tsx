@@ -14,7 +14,8 @@ type Patient = {
     registeredOn?: string;
 };
 
-const API_URL = "http://localhost:8080/api/patients";
+//const API_URL = "http://localhost:8080/api/patients";
+import {API_URL} from "../../config.ts";
 
 const emptyForm = {
     name: "",
@@ -175,7 +176,7 @@ export default function Patients() {
 
         try {
             const response = await fetch(
-                isEditing ? `${API_URL}/${editingId}` : API_URL,
+                isEditing ? `${API_URL}/api/patients/${editingId}` : API_URL,
                 {
                     method: isEditing ? "PUT" : "POST",
                     credentials: "include",
@@ -231,7 +232,7 @@ export default function Patients() {
         setDeletingId(id);
 
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
+            const response = await fetch(`${API_URL}/api/patients/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
@@ -265,7 +266,7 @@ export default function Patients() {
     useEffect(() => {
         async function fetchPatients() {
             try {
-                const response = await fetch(API_URL, {
+                const response = await fetch(`${API_URL}/api/patients`, {
                     credentials: "include",
                 });
 

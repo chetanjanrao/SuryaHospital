@@ -11,7 +11,8 @@ import {
 
 type LoginStep = "password" | "enrollment" | "verification";
 
-const API_URL = "http://localhost:8080/api/auth";
+//const API_URL = "http://localhost:8080/api/auth";
+import {API_URL} from "../../config.ts";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -175,7 +176,7 @@ export default function Login() {
 
 			const response =
 				await fetch(
-					`${API_URL}/2fa/verify`,
+					`${API_URL}/api/auth/2fa/verify`,
 					{
 						method: "POST",
 						credentials: "include",

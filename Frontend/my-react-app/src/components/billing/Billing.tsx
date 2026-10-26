@@ -24,6 +24,7 @@ import "./Billing.css";
 // =====================================================
 
 type PaymentStatus = "Paid" | "Pending" | "Overdue" | "Partial";
+import {API_URL} from "../../config.ts";
 
 interface Invoice {
     databaseId: number;
@@ -71,7 +72,7 @@ interface CreateInvoiceRequest {
 // This service logic stays inside Billing.tsx.
 // =====================================================
 
-const API_URL = "http://localhost:8080/api/billing";
+//const API_URL = "http://localhost:8080/api/billing";
 
 // Read a cookie value by name (used for the Spring CSRF token).
 function getCookie(name: string): string | null {
@@ -159,7 +160,7 @@ function mapInvoice(data: BillingApiResponse): Invoice {
 
 // GET: Fetch all invoices.
 async function fetchInvoices(): Promise<Invoice[]> {
-    const data = await apiRequest<BillingApiResponse[]>(API_URL);
+    const data = await apiRequest<BillingApiResponse[]>(`${API_URL}/api/billing`);
 
     return data.map(mapInvoice);
 }
@@ -168,7 +169,7 @@ async function fetchInvoices(): Promise<Invoice[]> {
 async function saveInvoice(
     invoice: CreateInvoiceRequest
 ): Promise<Invoice> {
-    const data = await apiRequest<BillingApiResponse>(API_URL, {
+    const data = await apiRequest<BillingApiResponse>(`${API_URL}/api/billing`, {
         method: "POST",
         body: JSON.stringify(invoice),
     });
@@ -183,7 +184,7 @@ async function savePayment(
     paymentMethod: string
 ): Promise<Invoice> {
     const data = await apiRequest<BillingApiResponse>(
-        `${API_URL}/${databaseId}/payments`,
+        `${API_URL}/api/billing/${databaseId}/payments`,
         {
             method: "POST",
             body: JSON.stringify({

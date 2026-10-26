@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 import "./Appointments.css";
 
-const API_URL = "http://localhost:8080/api";
+//const API_URL = "http://localhost:8080/api";
+import {API_URL} from "../../config.ts";
 
 type AppointmentStatus =
     | "SCHEDULED"
@@ -108,9 +109,9 @@ export default function Appointments() {
                     patientsResponse,
                     doctorsResponse,
                 ] = await Promise.all([
-                    fetch(`${API_URL}/appointments`, { credentials: "include" }),
-                    fetch(`${API_URL}/patients`, { credentials: "include" }),
-                    fetch(`${API_URL}/doctors`, { credentials: "include" }),
+                    fetch(`${API_URL}/api/appointments`, { credentials: "include" }),
+                    fetch(`${API_URL}/api/patients`, { credentials: "include" }),
+                    fetch(`${API_URL}/api/doctors`, { credentials: "include" }),
                 ]);
 
                 if (!appointmentsResponse.ok) {
@@ -227,7 +228,7 @@ export default function Appointments() {
                 },
             };
 
-            const response = await fetch(`${API_URL}/appointments`, {
+            const response = await fetch(`${API_URL}/api/appointments`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

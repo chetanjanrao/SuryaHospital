@@ -23,7 +23,8 @@ import {
 
 import type { LayoutContextType } from "../../Layout";
 
-const API_BASE_URL = "http://localhost:8080/api";
+//const API_BASE_URL = "http://localhost:8080/api";
+import {API_URL} from "../../config";
 
 type ApiRecord = Record<string, any>;
 
@@ -244,7 +245,7 @@ function Dashboard() {
         const fetchEndpoint = async (
             endpoint: string
         ): Promise<ApiRecord[]> => {
-            const url = `${API_BASE_URL}/${endpoint}`;
+            const url = `${API_URL}/api/${endpoint}`;
 
             const response = await fetch(url, {
                 method: "GET",

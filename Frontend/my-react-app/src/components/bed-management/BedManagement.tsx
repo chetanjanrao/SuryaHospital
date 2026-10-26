@@ -68,9 +68,10 @@ interface BedForm {
 // These functions are kept in this same file.
 // No separate bedService.ts is needed.
 
+import  {API_URL} from "../../config.ts";
 
-const BED_API_URL = "http://localhost:8080/api/beds";
-const PATIENT_API_URL = "http://localhost:8080/api/patients";
+const BED_API_URL = `${API_URL}/api/beds`;
+const PATIENT_API_URL = `${API_URL}/api/patients`;
 
 function getCsrfToken(): string | null {
     const prefix = "XSRF-TOKEN=";

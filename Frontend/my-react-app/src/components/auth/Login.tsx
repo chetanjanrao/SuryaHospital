@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { loginUser, getCsrfToken } from "../../services/authService";
 
-const API_URL = "http://localhost:8080/api/auth";
+//const API_URL = "http://localhost:8080/api/auth";
+import {API_URL} from "../../config.ts";
 
 type LoginStep = "password" | "enrollment" | "verification";
 
@@ -68,7 +69,7 @@ export default function Login() {
                 const csrfToken = await getCsrfToken();
 
                 const response = await fetch(
-                    `${API_URL}/2fa/enroll/setup`,
+                    `${API_URL}/api/auth/2fa/enroll/setup`,
                     {
                         method: "POST",
                         credentials: "include",
@@ -125,7 +126,7 @@ export default function Login() {
         try {
             const csrfToken = await getCsrfToken();
 
-            const response = await fetch(`${API_URL}/2fa/verify`, {
+            const response = await fetch(`${API_URL}/api/auth/2fa/verify`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -165,7 +166,7 @@ export default function Login() {
             const csrfToken = await getCsrfToken();
 
             const response = await fetch(
-                `${API_URL}/2fa/enroll/verify`,
+                `${API_URL}/api/auth/2fa/enroll/verify`,
                 {
                     method: "POST",
                     credentials: "include",

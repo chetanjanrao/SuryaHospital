@@ -63,12 +63,14 @@ interface SecuritySettings {
     twoFactorEnabled?: boolean;
 }
 
-const API_URL = "http://localhost:8080/api/settings/hospital";
-const PROFILE_API_URL = "http://localhost:8080/api/settings/profile";
+import {API_URL} from "../../config.ts";
+
+const API_URL_SETTING = `${API_URL}/api/settings/hospital`;
+const PROFILE_API_URL = `${API_URL}/api/settings/profile`;
 const NOTIFICATION_API_URL =
-    "http://localhost:8080/api/settings/notifications";
-const SECURITY_API_URL = "http://localhost:8080/api/security-settings";
-const AUTH_API_URL = "http://localhost:8080/api/auth";
+    `${API_URL}/api/settings/notifications`;
+const SECURITY_API_URL = `${API_URL}/api/security-settings`;
+const AUTH_API_URL = `${API_URL}/api/auth`;
 
 const initialHospital: HospitalSettings = {
     hospitalName: "Surya Multispeciality Hospital",
@@ -277,7 +279,7 @@ export default function Setting() {
             setLoadingHospital(true);
 
             try {
-                const response = await fetch(API_URL, {
+                const response = await fetch(API_URL_SETTING, {
                     method: "GET",
                     signal: controller.signal,
                     credentials: "include",
@@ -543,7 +545,7 @@ export default function Setting() {
             setSaving(true);
 
             try {
-                const response = await apiFetch(API_URL, {
+                const response = await apiFetch(API_URL_SETTING, {
                     method: "PUT",
                     body: JSON.stringify({
                         hospitalName: hospital.hospitalName.trim(),
@@ -711,7 +713,7 @@ export default function Setting() {
             if (activeTab === "hospital") {
                 setLoadingHospital(true);
 
-                const response = await fetch(API_URL, {
+                const response = await fetch(API_URL_SETTING, {
                     credentials: "include",
                 });
 

@@ -1,6 +1,6 @@
 
-const API_URL = "http://localhost:8080/api/medical-records";
-
+//const API_URL = "http://localhost:8080/api/medical-records";
+import { API_URL } from "../config"
 // Status values expected by the Spring Boot backend
 export type RecordStatus = "ACTIVE" | "FOLLOW_UP" | "CLOSED";
 

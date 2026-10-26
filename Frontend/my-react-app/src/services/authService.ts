@@ -1,5 +1,6 @@
 
-const API_URL = "http://localhost:8080/api/auth";
+//const API_URL = "http://localhost:8080/api/auth";
+import {API_URL} from "../config.ts";
 
 export interface LoginRequest {
     email: string;
@@ -60,7 +61,7 @@ async function getErrorMessage(
 }
 
 export async function getCsrfToken(): Promise<string> {
-    const response = await fetch(`${API_URL}/csrf`, {
+    const response = await fetch(`${API_URL}/api/auth/csrf`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -98,9 +99,10 @@ async function csrfHeaders(): Promise<Record<string, string>> {
 export async function loginUser(
     credentials: LoginRequest
 ): Promise<LoginResponse> {
+    console.log(API_URL)
     const headers = await csrfHeaders();
 
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         credentials: "include",
         headers,
@@ -115,7 +117,7 @@ export async function loginUser(
 }
 
 export async function getCurrentUser(): Promise<CurrentUser> {
-    const response = await fetch(`${API_URL}/me`, {
+    const response = await fetch(`${API_URL}/api/auth/me`, {
         method: "GET",
         credentials: "include",
         headers: {
@@ -135,7 +137,7 @@ export async function getCurrentUser(): Promise<CurrentUser> {
 export async function setupTwoFactor(): Promise<TwoFactorSetupResponse> {
     const headers = await csrfHeaders();
 
-    const response = await fetch(`${API_URL}/2fa/setup`, {
+    const response = await fetch(`${API_URL}/api/auth/2fa/setup`, {
         method: "POST",
         credentials: "include",
         headers,
@@ -164,7 +166,7 @@ export async function setupTwoFactor(): Promise<TwoFactorSetupResponse> {
 export async function logoutUser(): Promise<void> {
     const csrfToken = await getCsrfToken();
 
-    const response = await fetch(`${API_URL}/logout`, {
+    const response = await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -185,7 +187,7 @@ export async function logoutUser(): Promise<void> {
 export async function beginLoginTwoFactorEnrollment(): Promise<TwoFactorSetupResponse> {
     const headers = await csrfHeaders();
 
-    const response = await fetch(`${API_URL}/2fa/enroll/setup`, {
+    const response = await fetch(`${API_URL}/api/auth/2fa/enroll/setup`, {
         method: "POST",
         credentials: "include",
         headers,
@@ -211,7 +213,7 @@ export async function verifyLoginTwoFactorEnrollment(
 ): Promise<void> {
     const headers = await csrfHeaders();
 
-    const response = await fetch(`${API_URL}/2fa/enroll/verify`, {
+    const response = await fetch(`${API_URL}/api/auth/2fa/enroll/verify`, {
         method: "POST",
         credentials: "include",
         headers,

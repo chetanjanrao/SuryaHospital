@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 import "./Departments.css";
 
-const API_URL = "http://localhost:8080/api/departments";
+//const API_URL = "http://localhost:8080/api/departments";
+import {API_URL} from "../../config.ts";
 
 type DepartmentStatus = "Active" | "Inactive";
 
@@ -139,7 +140,7 @@ export default function Departments() {
                 setLoading(true);
                 setError("");
 
-                const data = await apiRequest<Department[]>(API_URL);
+                const data = await apiRequest<Department[]>(`${API_URL}/api/departments`);
 
                 if (isMounted) {
                     setDepartments(data);
@@ -267,7 +268,7 @@ export default function Departments() {
 
             if (editingId !== null) {
                 const updatedDepartment = await apiRequest<Department>(
-                    `${API_URL}/${editingId}`,
+                    `${API_URL}/api/departments/${editingId}`,
                     {
                         method: "PUT",
                         body: JSON.stringify(departmentData),
@@ -291,7 +292,7 @@ export default function Departments() {
                 setSuccessMessage("Department updated successfully.");
             } else {
                 const createdDepartment = await apiRequest<Department>(
-                    API_URL,
+                    `${API_URL}/api/departments`,
                     {
                         method: "POST",
                         body: JSON.stringify(departmentData),
@@ -341,7 +342,7 @@ export default function Departments() {
 
         try {
             const updatedDepartment = await apiRequest<Department>(
-                `${API_URL}/${department.id}`,
+                `${API_URL}/api/departments/${department.id}`,
                 {
                     method: "PUT",
                     body: JSON.stringify(updatedData),

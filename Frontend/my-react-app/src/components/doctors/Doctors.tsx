@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 import "./Doctors.css";
 
-const API_URL = "http://localhost:8080/api/doctors";
+//const API_URL = "http://localhost:8080/api/doctors";
+import {API_URL} from "../../config.ts";
 
 type Doctor = {
     id: number;
@@ -86,7 +87,7 @@ function Doctors() {
             setLoading(true);
             setLoadError("");
 
-            const response = await fetch(API_URL, { credentials: "include" });
+            const response = await fetch(`${API_URL}/api/doctors`, { credentials: "include" });
 
             if (!response.ok) {
                 setLoadError(
@@ -230,7 +231,7 @@ function Doctors() {
                 modalMode === "edit" && selectedDoctor !== null;
 
             const url = isEditing
-                ? `${API_URL}/${selectedDoctor.id}`
+                ? `${API_URL}/api/doctors/${selectedDoctor.id}`
                 : API_URL;
 
             const method = isEditing ? "PUT" : "POST";
@@ -296,7 +297,7 @@ function Doctors() {
             setActionError("");
             setSuccessMessage("");
 
-            const response = await fetch(`${API_URL}/${doctor.id}`, {
+            const response = await fetch(`${API_URL}/api/doctors/${doctor.id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
