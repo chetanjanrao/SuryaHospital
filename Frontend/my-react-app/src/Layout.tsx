@@ -1,8 +1,6 @@
-
 import { useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import {useNavigate} from "react-router-dom";
-import {logoutUser} from "./services/authService.ts";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { logoutUser } from "./services/authService.ts";
 import {
     Activity,
     BedDouble,
@@ -51,23 +49,21 @@ function Layout() {
         (location.pathname === "/billing"
             ? "Billing"
             : location.pathname === "/settings"
-              ? "Settings"
-              : "Dashboard");
-   /// logout functinality
-    async function  handleLogOut()
-    {
+                ? "Settings"
+                : "Dashboard");
+
+    // Logout: always send the user to /login, even if the server call fails
+    // (e.g. the session already expired). ProtectedRoute re-checks the session.
+    async function handleLogOut() {
         try {
             await logoutUser();
-            navigate("/login", { replace: true });
         } catch (error) {
             console.error("Logout failed:", error);
-            window.alert(
-                error instanceof Error
-                    ? error.message
-                    : "Unable to log out. Please try again."
-            );
+        } finally {
+            navigate("/login", { replace: true });
         }
     }
+
     return (
         <div className="app-shell">
             {sidebarOpen && (
