@@ -3,6 +3,9 @@ import { useEffect, useMemo, useState, type SubmitEvent } from "react";
 import { Search, Plus, Eye, Pencil, X, Users } from "lucide-react";
 import "./Patients.css";
 
+import { API_URL } from "../../config.ts";
+import { getCsrfToken } from "../../services/authService.ts";
+
 type Patient = {
     id: number;
     name: string;
@@ -14,9 +17,6 @@ type Patient = {
     registeredOn?: string;
 };
 
-
-import {API_URL} from "../../config.ts";
-
 const emptyForm = {
     name: "",
     age: "",
@@ -25,15 +25,6 @@ const emptyForm = {
     email: "",
     bloodGroup: "O+",
 };
-
-// Reads the XSRF-TOKEN cookie that Spring Security sets.
-// Must be synchronous (not async) so it can be used directly inside headers.
-function getCsrfToken(): string {
-    const match = document.cookie
-        .split("; ")
-        .find((c) => c.startsWith("XSRF-TOKEN="));
-    return match ? decodeURIComponent(match.split("=")[1]) : "";
-}
 
 export default function Patients() {
     const [patients, setPatients] = useState<Patient[]>([]);
@@ -175,14 +166,19 @@ export default function Patients() {
         const isEditing = editingId !== null;
 
         try {
+            const csrfToken = await getCsrfToken();
+
             const response = await fetch(
-                isEditing ? `${API_URL}/api/patients/${editingId}` : API_URL,
+                isEditing
+                    ? `${API_URL}/api/patients/${editingId}`
+                    : `${API_URL}/api/patients`,
                 {
                     method: isEditing ? "PUT" : "POST",
                     credentials: "include",
                     headers: {
+                        Accept: "application/json",
                         "Content-Type": "application/json",
-                        "X-XSRF-TOKEN": getCsrfToken(),
+                        "X-XSRF-TOKEN": csrfToken,
                     },
                     body: JSON.stringify(patientData),
                 }
@@ -232,11 +228,14 @@ export default function Patients() {
         setDeletingId(id);
 
         try {
+            const csrfToken = await getCsrfToken();
+
             const response = await fetch(`${API_URL}/api/patients/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
-                    "X-XSRF-TOKEN": getCsrfToken(),
+                    Accept: "application/json",
+                    "X-XSRF-TOKEN": csrfToken,
                 },
             });
 

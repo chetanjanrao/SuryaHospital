@@ -13,11 +13,13 @@ import "./MedicalRecords.css";
 /* ------------------------------------------------------------------ */
 /* Medical record service (previously medicalRecordService.ts)         */
 /* ------------------------------------------------------------------ */
-import {API_URL} from "../../config.ts";
+import { API_URL } from "../../config.ts";
+import { getCsrfToken } from "../../services/authService.ts";
 
 const API_DATA = `${API_URL}/api/medical-records`;
-const PATIENT_API = `${API_DATA}/api/patients`;
-const DOCTOR_API = `${API_DATA}/api/doctors`;
+// Patients and doctors have their own endpoints (not under /api/medical-records)
+const PATIENT_API = `${API_URL}/api/patients`;
+const DOCTOR_API = `${API_URL}/api/doctors`;
 
 // Status values expected by the Spring Boot backend
 export type ApiRecordStatus = "ACTIVE" | "FOLLOW_UP" | "CLOSED";
@@ -41,15 +43,6 @@ export type MedicalRecordPayload = Omit<
     ApiMedicalRecord,
     "id" | "patientName" | "doctorName"
 >;
-
-// Reads the XSRF-TOKEN cookie that Spring Security sets.
-// Must be synchronous (not async) so it can be used directly inside headers.
-function getCsrfToken(): string {
-    const match = document.cookie
-        .split("; ")
-        .find((c) => c.startsWith("XSRF-TOKEN="));
-    return match ? decodeURIComponent(match.split("=")[1]) : "";
-}
 
 // Handle API responses and errors
 async function handleResponse<T>(
@@ -95,12 +88,15 @@ export async function getMedicalRecordById(
 export async function createMedicalRecord(
     record: MedicalRecordPayload
 ): Promise<ApiMedicalRecord> {
+    const csrfToken = await getCsrfToken();
+
     const response = await fetch(API_DATA, {
         method: "POST",
         credentials: "include",
         headers: {
+            Accept: "application/json",
             "Content-Type": "application/json",
-            "X-XSRF-TOKEN": getCsrfToken(),
+            "X-XSRF-TOKEN": csrfToken,
         },
         body: JSON.stringify(record),
     });
@@ -113,12 +109,15 @@ export async function updateMedicalRecord(
     id: number,
     record: MedicalRecordPayload
 ): Promise<ApiMedicalRecord> {
+    const csrfToken = await getCsrfToken();
+
     const response = await fetch(`${API_DATA}/${id}`, {
         method: "PUT",
         credentials: "include",
         headers: {
+            Accept: "application/json",
             "Content-Type": "application/json",
-            "X-XSRF-TOKEN": getCsrfToken(),
+            "X-XSRF-TOKEN": csrfToken,
         },
         body: JSON.stringify(record),
     });
@@ -130,11 +129,14 @@ export async function updateMedicalRecord(
 export async function deleteMedicalRecord(
     id: number
 ): Promise<void> {
+    const csrfToken = await getCsrfToken();
+
     const response = await fetch(`${API_DATA}/${id}`, {
         method: "DELETE",
         credentials: "include",
         headers: {
-            "X-XSRF-TOKEN": getCsrfToken(),
+            Accept: "application/json",
+            "X-XSRF-TOKEN": csrfToken,
         },
     });
 

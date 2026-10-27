@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import "./Doctors.css";
 
-
-import {API_URL} from "../../config.ts";
+import { API_URL } from "../../config.ts";
+import { getCsrfToken } from "../../services/authService.ts";
 
 type Doctor = {
     id: number;
@@ -40,15 +40,6 @@ const emptyForm: DoctorForm = {
     consultationFee: 0,
     available: true,
 };
-
-// Reads the XSRF-TOKEN cookie that Spring Security sets.
-// Must be synchronous (not async) so it can be used directly inside headers.
-function getCsrfToken(): string {
-    const match = document.cookie
-        .split("; ")
-        .find((c) => c.startsWith("XSRF-TOKEN="));
-    return match ? decodeURIComponent(match.split("=")[1]) : "";
-}
 
 // Builds a readable error message from a failed response
 async function readError(response: Response, fallback: string) {
@@ -232,16 +223,19 @@ function Doctors() {
 
             const url = isEditing
                 ? `${API_URL}/api/doctors/${selectedDoctor.id}`
-                : API_URL;
+                : `${API_URL}/api/doctors`;
 
             const method = isEditing ? "PUT" : "POST";
+
+            const csrfToken = await getCsrfToken();
 
             const response = await fetch(url, {
                 method,
                 credentials: "include",
                 headers: {
+                    Accept: "application/json",
                     "Content-Type": "application/json",
-                    "X-XSRF-TOKEN": getCsrfToken(),
+                    "X-XSRF-TOKEN": csrfToken,
                 },
                 body: JSON.stringify({
                     name: form.name.trim(),
@@ -297,11 +291,14 @@ function Doctors() {
             setActionError("");
             setSuccessMessage("");
 
+            const csrfToken = await getCsrfToken();
+
             const response = await fetch(`${API_URL}/api/doctors/${doctor.id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
-                    "X-XSRF-TOKEN": getCsrfToken(),
+                    Accept: "application/json",
+                    "X-XSRF-TOKEN": csrfToken,
                 },
             });
 
